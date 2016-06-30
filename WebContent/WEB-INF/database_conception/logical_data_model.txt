@@ -1,0 +1,122 @@
+======================================== Modèle Logique de Données ========================================
+
+Content(
+	#id: INT,
+	name: VARCHAR(200)
+) avec KEY(name)
+
+/* Ajout d'une clé artificielle pour les performances */
+
+F+ = {
+	id -> name;
+	name -> id
+}
+
+/* La relation Content est en 1NF car elle possède une clé et tous ses attributs sont atomiques.
+La relation Content est en 2NF car elle est en 1NF et que tout attribut n'appartenant pas à une clé ne dépend 
+pas seulement d'une partie d'une clé (ou encore que toutes les DF issues d'une clé sont élémentaires).
+La relation Content est en 3NF car elle est en 2NF et que tout attribut n'appartenant pas à une clé ne dépend pas d'un
+autre attribut n'appartenant pas à une clé (ou encore que toutes les DFE vers des attributs n'appartenant pas à une 
+clé, sont issues d'une clé).  
+La relation Content est en BCNF car elle est en 3NF et que tout attribut n'appartenant pas à une clé n'est pas source 
+d'une DF vers une partie d'une clé (ou encore toutes les DFE, celles dans F+, ont la forme K -> A
+où K est une clé et A un attribut n'appartenant pas à une clé). */
+
+-----------------------------------------------------------------------------------------------
+
+Part(
+	#id: INT,
+	content=>Content,
+	beginning: TIME,
+	end: TIME
+) avec KEY(content, beginning) et KEY(content, end)
+
+/* Ajout d'une clé artificielle pour les performances */
+
+F+ = {
+	id -> content;
+	id -> beginning;
+	id -> end;
+	(content, beginning) -> id;
+	(content, beginning) -> end;
+	(content, end) -> id;
+	(content, end) -> beginning
+}
+
+/* La relation Part est en 1NF car elle possède une clé et tous ses attributs sont atomiques.
+La relation Part est en 2NF car elle est en 1NF et que tout attribut n'appartenant pas à une clé ne dépend 
+pas seulement d'une partie d'une clé (ou encore que toutes les DF issues d'une clé sont élémentaires).
+La relation Part est en 3NF car elle est en 2NF et que tout attribut n'appartenant pas à une clé ne dépend pas d'un
+autre attribut n'appartenant pas à une clé (ou encore que toutes les DFE vers des attributs n'appartenant pas à une 
+clé, sont issues d'une clé).  
+La relation Part est en BCNF car elle est en 3NF et que tout attribut n'appartenant pas à une clé n'est pas source 
+d'une DF vers une partie d'une clé (ou encore toutes les DFE, celles dans F+, ont la forme K -> A
+où K est une clé et A un attribut n'appartenant pas à une clé */
+
+-----------------------------------------------------------------------------------------------
+
+Language(
+	#id: INT,
+	language: VARCHAR(100)
+) avec KEY(language)
+
+/* Ajout d'une clé artificielle pour les performances */
+
+F+ = {
+	id -> language;
+	language -> id
+}
+
+/* La relation Language est en 1NF car elle possède une clé et tous ses attributs sont atomiques.
+La relation Language est en 2NF car elle est en 1NF et que tout attribut n'appartenant pas à une clé ne dépend 
+pas seulement d'une partie d'une clé (ou encore que toutes les DF issues d'une clé sont élémentaires).
+La relation Language est en 3NF car elle est en 2NF et que tout attribut n'appartenant pas à une clé ne dépend pas d'un
+autre attribut n'appartenant pas à une clé (ou encore que toutes les DFE vers des attributs n'appartenant pas à une 
+clé, sont issues d'une clé).  
+La relation Language est en BCNF car elle est en 3NF et que tout attribut n'appartenant pas à une clé n'est pas source 
+d'une DF vers une partie d'une clé (ou encore toutes les DFE, celles dans F+, ont la forme K -> A
+où K est une clé et A un attribut n'appartenant pas à une clé). */
+
+-----------------------------------------------------------------------------------------------
+
+ContentLanguage(
+	#content=>Content,
+	#language=>Language
+)
+
+/* La relation ContentLanguage est en 1NF car elle possède une clé et tous ses attributs sont atomiques.
+La relation ContentLanguage est en 2NF car elle est en 1NF et que tout attribut n'appartenant pas à une clé ne dépend 
+pas seulement d'une partie d'une clé (ou encore que toutes les DF issues d'une clé sont élémentaires).
+La relation ContentLanguage est en 3NF car elle est en 2NF et que tout attribut n'appartenant pas à une clé ne dépend pas d'un
+autre attribut n'appartenant pas à une clé (ou encore que toutes les DFE vers des attributs n'appartenant pas à une 
+clé, sont issues d'une clé).  
+La relation ContentLanguage est en BCNF car elle est en 3NF et que tout attribut n'appartenant pas à une clé n'est pas source 
+d'une DF vers une partie d'une clé (ou encore toutes les DFE, celles dans F+, ont la forme K -> A
+où K est une clé et A un attribut n'appartenant pas à une clé). */
+
+-----------------------------------------------------------------------------------------------
+
+PartTranslation(
+	#part=>Part,
+	#language=>Language,
+	content: TEXT
+)
+
+F+ = {
+	(part, language) -> content
+}
+
+/* La relation PartTranslation est en 1NF car elle possède une clé et tous ses attributs sont atomiques.
+La relation PartTranslation est en 2NF car elle est en 1NF et que tout attribut n'appartenant pas à une clé ne dépend 
+pas seulement d'une partie d'une clé (ou encore que toutes les DF issues d'une clé sont élémentaires).
+La relation PartTranslation est en 3NF car elle est en 2NF et que tout attribut n'appartenant pas à une clé ne dépend pas d'un
+autre attribut n'appartenant pas à une clé (ou encore que toutes les DFE vers des attributs n'appartenant pas à une 
+clé, sont issues d'une clé).  
+La relation PartTranslation est en BCNF car elle est en 3NF et que tout attribut n'appartenant pas à une clé n'est pas source 
+d'une DF vers une partie d'une clé (ou encore toutes les DFE, celles dans F+, ont la forme K -> A
+où K est une clé et A un attribut n'appartenant pas à une clé). */
+
+
+======================================== Remarque ========================================
+
+/* Toutes les relations du Modèle Logique de Données sont en BCNF (Boyce-Codd Normal Form). */
