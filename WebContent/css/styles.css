@@ -1,0 +1,51 @@
+h1, h2, h3, h4, h5{
+	text-align: center;
+}
+
+.alert{
+	margin-top : 10px;
+}
+
+.glyphicon-exclamation-sign{
+	margin-right : 5px;
+}
+
+img{
+	width: 150px;
+	margin: 0 auto;
+}
+
+footer{
+	padding-bottom: 3px;
+	padding-top: 8px;
+	background: #2d2d30;
+	color: #bdbdbd;	
+}
+
+thead{
+	background: #2d2d30;
+	color: #bdbdbd;
+}
+
+.panel-default > .panel-heading{
+	background: #2d2d30;
+	color: #bdbdbd;
+}
+
+.panel-title > .btn{
+	color: #ffffff;
+}
+
+.panel{
+	margin-top: 30px;
+}
+
+.jumbotron{
+    background-color: #2d2d30;
+    color: #bdbdbd;
+    margin-bottom: 0px;
+}
+
+li {
+    list-style-type: none;
+}
