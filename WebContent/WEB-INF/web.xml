@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  
   <display-name>Editeur de sous-titres</display-name>
   <welcome-file-list>
     <welcome-file>import_content</welcome-file>
   </welcome-file-list>
+  
   <jsp-config>
     <jsp-property-group>
       <url-pattern>*.jsp</url-pattern>
       <include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
     </jsp-property-group>
   </jsp-config>
+  
   <servlet>
     <servlet-name>ImportContent</servlet-name>
     <servlet-class>servlets.ImportContent</servlet-class>
+ 	<multipart-config>
+		<location>/tmp</location>
+		<max-file-size>5242880</max-file-size>
+		<max-request-size>26214400</max-request-size>
+		<file-size-threshold>5242880</file-size-threshold>
+ 	</multipart-config>
   </servlet>
   <servlet-mapping>
     <servlet-name>ImportContent</servlet-name>
@@ -34,4 +43,5 @@
     <servlet-name>ExportTranslation</servlet-name>
     <url-pattern>/export_translation</url-pattern>
   </servlet-mapping>
+  
 </web-app>
