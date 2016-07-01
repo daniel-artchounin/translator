@@ -3,19 +3,25 @@ package beans;
 import java.io.Serializable;
 import java.sql.Time;
 
-public class Part implements Serializable {
+public class ContentPart implements Serializable {
 	
 	private static final long serialVersionUID = -8303386072832554187L;
 	private int id;
-	private int content;
+	private String content;
 	private Time beginning;
 	private Time end;
 	
-	public Part() {
+	public ContentPart() {
 	}
 
-	public Part(int id, int content, Time beginning, Time end) {
+	public ContentPart(int id, String content, Time beginning, Time end) {
 		this.id = id;
+		this.content = content;
+		this.beginning = beginning;
+		this.end = end;
+	}
+	
+	public ContentPart(String content, Time beginning, Time end) {
 		this.content = content;
 		this.beginning = beginning;
 		this.end = end;
@@ -29,11 +35,11 @@ public class Part implements Serializable {
 		this.id = id;
 	}
 
-	public int getContent() {
+	public String getContent() {
 		return content;
 	}
 
-	public void setContent(int content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 

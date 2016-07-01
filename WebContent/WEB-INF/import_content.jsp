@@ -29,9 +29,13 @@
 									<input type="text" id="contentName" class="form-control" placeholder="Nom du contenu" name="contentName" autofocus required/>
 								</div>
 								<div class="form-group <c:if test="${ !empty errorMessage }"><c:out value="has-error" /></c:if>">
-									<label class="control-label" for="language">Langue :</label>
-									<select name="language" id ="language" autofocus required>
-										<option value="english">english</option>
+									<label class="control-label" for="languageId">Langue :</label>
+									<select name="languageId" id ="languageId" autofocus required>
+										<c:if test="${ !empty languages }">
+											<c:forEach var="language" items="${ languages }" varStatus="status">
+												<option value="<c:out value="${ language.id }"/>"> ${ language.language } </option>
+											</c:forEach>
+										</c:if>
 									</select>
 								</div>
 								<div class="form-group <c:if test="${ !empty errorMessage }"><c:out value="has-error" /></c:if>">
