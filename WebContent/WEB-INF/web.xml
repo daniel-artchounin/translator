@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>Editeur de sous-titres</display-name>
+  <welcome-file-list>
+    <welcome-file>import_content</welcome-file>
+  </welcome-file-list>
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
+    </jsp-property-group>
+  </jsp-config>
+  <servlet>
+    <servlet-name>ImportContent</servlet-name>
+    <servlet-class>servlets.ImportContent</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ImportContent</servlet-name>
+    <url-pattern>/import_content</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UpdateTranslation</servlet-name>
+    <servlet-class>servlets.UpdateTranslation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateTranslation</servlet-name>
+    <url-pattern>/update_translation</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ExportTranslation</servlet-name>
+    <servlet-class>servlets.ExportTranslation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExportTranslation</servlet-name>
+    <url-pattern>/export_translation</url-pattern>
+  </servlet-mapping>
+</web-app>
