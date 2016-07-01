@@ -1,14 +1,6 @@
 package servlets;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -57,9 +49,13 @@ public class ImportContent extends HttpServlet {
 		Part filePart = request.getPart("file");
 		int languageId = Integer.valueOf(request.getParameter("languageId"));
 		Content content = null;
+		String contentName = request.getParameter("contentName");
 		try {
-			content = SRTHandler.getContent(filePart, request.getParameter("contentName"));
-		} catch (SRTHandlerException e) {
+			content = SRTHandler.getContent(filePart, contentName);
+			this.importContentDao.addContent(content, languageId);
+			request.setAttribute("successMessage", "Le traduction du contenu " + 
+			contentName + " vient d'être sauvegardée." );
+		} catch (SRTHandlerException | DaoException e) {
 			request.setAttribute("errorMessage", e.getMessage());
 		}
 		doGet(request, response);

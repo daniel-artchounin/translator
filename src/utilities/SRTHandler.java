@@ -83,7 +83,7 @@ public class SRTHandler {
 						}						
 					}	
 					System.out.println(partContent); // Test
-					ContentPart contentPart = new ContentPart( partContent, Time.valueOf(m.group(1)), Time.valueOf(m.group(2)) );
+					ContentPart contentPart = new ContentPart(Time.valueOf(m.group(1)), Time.valueOf(m.group(2)), partContent);
 					contentParts.add( contentPart );
         		}        		
 			}
