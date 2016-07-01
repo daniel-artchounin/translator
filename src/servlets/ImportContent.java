@@ -9,15 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ImportContent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String IMPORT_CONTENT_JSP = "/WEB-INF/import_content.jsp";
 
     public ImportContent() {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		this.getServletContext().getRequestDispatcher(IMPORT_CONTENT_JSP).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		doGet(request, response);
 	}
 

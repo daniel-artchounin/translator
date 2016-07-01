@@ -9,15 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 public class UpdateTranslation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String UPDATE_TRANSLATION_JSP = "/WEB-INF/update_translation.jsp";
 
     public UpdateTranslation() {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		this.getServletContext().getRequestDispatcher(UPDATE_TRANSLATION_JSP).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		doGet(request, response);
 	}
 
