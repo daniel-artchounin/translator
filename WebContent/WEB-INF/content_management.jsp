@@ -12,10 +12,10 @@
 		<!-- Here, we include the header -->
 		<%@ include file="/WEB-INF/header.jsp" %>   
 		<jsp:include page="/WEB-INF/menu.jsp" >
-			<jsp:param name="updateTranslation" value="updateTranslation" />
+			<jsp:param name="contentManagement" value="contentManagement" />
 		</jsp:include>
 		<div class="container-fluid">
-			<p>Mise à jour d'une tradcution</p>
+			<p>Gestion des contenus</p>
 	    </div>
 	    <!-- Here, we include the footer -->
 	    <%@ include file="/WEB-INF/footer.jsp" %>

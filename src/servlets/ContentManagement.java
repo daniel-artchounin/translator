@@ -8,30 +8,30 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.DAOConfigurationException;
 import dao.DaoFactory;
-import dao.UpdateTranslationDao;
+import dao.ContentManagementDao;
 
 
-public class UpdateTranslation extends HttpServlet {
+public class ContentManagement extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String UPDATE_TRANSLATION_JSP = "/WEB-INF/update_translation.jsp";
+	private static final String CONTENT_MANAGEMENT_JSP = "/WEB-INF/content_management.jsp";
 
-	private UpdateTranslationDao updateTranslationDao;
+	private ContentManagementDao contentManagementDao;
 	
-    public UpdateTranslation() {
+    public ContentManagement() {
     }
     
     public void init() throws ServletException {
         DaoFactory daoFactory;
 		try {
 			daoFactory = DaoFactory.getInstance();
-			this.updateTranslationDao = daoFactory.getUpdateTranslationDao();
+			this.contentManagementDao = daoFactory.getUpdateTranslationDao();
 		} catch (DAOConfigurationException e) {
 			e.printStackTrace();
 		}        
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher(UPDATE_TRANSLATION_JSP).forward(request, response);
+		this.getServletContext().getRequestDispatcher(CONTENT_MANAGEMENT_JSP).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

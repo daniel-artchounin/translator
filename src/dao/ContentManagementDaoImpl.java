@@ -8,10 +8,10 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 
-public class UpdateTranslationDaoImpl implements UpdateTranslationDao {
+public class ContentManagementDaoImpl implements ContentManagementDao {
     private DaoFactory daoFactory;
 
-    UpdateTranslationDaoImpl(DaoFactory daoFactory) {
+    ContentManagementDaoImpl(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
 

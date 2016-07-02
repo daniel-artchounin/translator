@@ -28,12 +28,12 @@
     <url-pattern>/import_content</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>UpdateTranslation</servlet-name>
-    <servlet-class>servlets.UpdateTranslation</servlet-class>
+    <servlet-name>ContentManagement</servlet-name>
+    <servlet-class>servlets.ContentManagement</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>UpdateTranslation</servlet-name>
-    <url-pattern>/update_translation</url-pattern>
+    <servlet-name>ContentManagement</servlet-name>
+    <url-pattern>/content_management</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>ExportTranslation</servlet-name>

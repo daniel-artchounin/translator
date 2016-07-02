@@ -69,8 +69,8 @@ public class DaoFactory {
         return new ImportContentDaoImpl(this);
     }
     
-    public UpdateTranslationDao getUpdateTranslationDao() {
-        return new UpdateTranslationDaoImpl(this);
+    public ContentManagementDao getUpdateTranslationDao() {
+        return new ContentManagementDaoImpl(this);
     }
     
     public ExportTranslationDao getExportTranslationDao() {
