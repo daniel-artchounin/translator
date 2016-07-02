@@ -10,10 +10,21 @@ public class Content implements Serializable {
 	private String name;
 	private ArrayList<ContentPart> parts;
 	private boolean hasAtLeastTwoExportableTranslations;
+	private ArrayList<Language> languages;
 
 	public Content() {
 	}
 	
+	public Content(int id, String name, ArrayList<ContentPart> parts, boolean hasAtLeastTwoExportableTranslations,
+			ArrayList<Language> languages) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.parts = parts;
+		this.hasAtLeastTwoExportableTranslations = hasAtLeastTwoExportableTranslations;
+		this.languages = languages;
+	}
+
 	public Content(int id, String name, ArrayList<ContentPart> parts, boolean hasAtLeastTwoExportableTranslations) {
 		super();
 		this.id = id;
@@ -36,6 +47,7 @@ public class Content implements Serializable {
 	public Content(int id, String name) {
 		this.id = id;
 		this.name = name;
+		this.languages = new ArrayList<Language>();
 	}
 
 	public Content(String name) {
@@ -72,6 +84,14 @@ public class Content implements Serializable {
 
 	public void setHasAtLeastTwoExportableTranslations(boolean hasAtLeastTwoExportableTranslations) {
 		this.hasAtLeastTwoExportableTranslations = hasAtLeastTwoExportableTranslations;
+	}
+
+	public ArrayList<Language> getLanguages() {
+		return languages;
+	}
+
+	public void setLanguages(ArrayList<Language> languages) {
+		this.languages = languages;
 	}
 	
 }

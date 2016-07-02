@@ -7,31 +7,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.DAOConfigurationException;
+import dao.DaoException;
 import dao.DaoFactory;
-import dao.ContentManagementDao;
+import dao.ContentsManagementDao;
 
 
-public class ContentManagement extends HttpServlet {
+public class ContentsManagement extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String CONTENT_MANAGEMENT_JSP = "/WEB-INF/content_management.jsp";
+	private static final String CONTENTS_MANAGEMENT_JSP = "/WEB-INF/contents_management.jsp";
 
-	private ContentManagementDao contentManagementDao;
+	private ContentsManagementDao contentsManagementDao;
 	
-    public ContentManagement() {
+    public ContentsManagement() {
     }
     
     public void init() throws ServletException {
         DaoFactory daoFactory;
 		try {
 			daoFactory = DaoFactory.getInstance();
-			this.contentManagementDao = daoFactory.getUpdateTranslationDao();
+			this.contentsManagementDao = daoFactory.getUpdateTranslationDao();
 		} catch (DAOConfigurationException e) {
 			e.printStackTrace();
 		}        
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher(CONTENT_MANAGEMENT_JSP).forward(request, response);
+		try {
+			request.setAttribute("contents", this.contentsManagementDao.getContents());
+		} catch (DaoException e) {
+			request.setAttribute("errorMessage", e.getMessage());
+		}
+		this.getServletContext().getRequestDispatcher(CONTENTS_MANAGEMENT_JSP).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

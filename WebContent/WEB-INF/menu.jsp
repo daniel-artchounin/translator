@@ -12,7 +12,7 @@
 		<div class="collapse navbar-collapse" id="myNavbar">			
 			<ul class="nav navbar-nav">
 				<li <c:if test="${ !empty param.importContent }">class="active"</c:if> ><a href="<c:url value="/import_content"/>" title="Vers l'import d'un contenu">Import d'un contenu</a></li>
-				<li <c:if test="${ !empty param.contentManagement }">class="active"</c:if> ><a href="<c:url value="/content_management"/>" title="Vers la gestion des contenus">Gestion des contenus</a></li>
+				<li <c:if test="${ !empty param.contentsManagement }">class="active"</c:if> ><a href="<c:url value="/contents_management"/>" title="Vers la gestion des contenus">Gestion des contenus</a></li>
 			</ul>
 		</div>
 	</div>

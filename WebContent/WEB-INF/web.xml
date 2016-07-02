@@ -28,12 +28,12 @@
     <url-pattern>/import_content</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>ContentManagement</servlet-name>
-    <servlet-class>servlets.ContentManagement</servlet-class>
+    <servlet-name>ContentsManagement</servlet-name>
+    <servlet-class>servlets.ContentsManagement</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ContentManagement</servlet-name>
-    <url-pattern>/content_management</url-pattern>
+    <servlet-name>ContentsManagement</servlet-name>
+    <url-pattern>/contents_management</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>ExportTranslation</servlet-name>
@@ -42,6 +42,14 @@
   <servlet-mapping>
     <servlet-name>ExportTranslation</servlet-name>
     <url-pattern>/export_translation</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TranslationManagement</servlet-name>
+    <servlet-class>servlets.TranslationManagement</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TranslationManagement</servlet-name>
+    <url-pattern>/translation_management</url-pattern>
   </servlet-mapping>
   
 </web-app>
