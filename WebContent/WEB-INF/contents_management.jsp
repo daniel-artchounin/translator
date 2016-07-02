@@ -104,7 +104,7 @@
 													<!-- Possibility to desactivate (disable export) a translation -->
 													<c:if test="${ content.hasAtLeastTwoExportableTranslations == true }">
 														<c:url value="${ translationManagementUrl }" var="url4">
-															<c:param name="action" value="desactivate_translation" />
+															<c:param name="action" value="deactivate_translation" />
 															<c:param name="content_id" value="${ content.id }" />
 															<c:param name="language_id" value="${ language.id }" />
 														</c:url>

@@ -52,8 +52,8 @@ public class TranslationManagement extends HttpServlet {
 					session.setAttribute("errorMessage", e.getMessage());
 				}
 				break;
-			case "desactivate_translation":
-				System.out.println("desactivate_translation");
+			case "deactivate_translation":
+				System.out.println("deactivate_translation");
 				break;
 			case "consult_modify_translation":
 				System.out.println("consult_modify_translation");

@@ -60,11 +60,9 @@ public class ContentsManagementDaoImpl implements ContentsManagementDao {
             	String contentName = result.getString("contentName");
                 int languageId = result.getInt("languageId");
                 String languageName = result.getString("languageName");
-                boolean exportableTranslation = result.getBoolean("exportableTranslation");
-                
+                boolean exportableTranslation = result.getBoolean("exportableTranslation");                
                 if( !previousContentName.equals(contentName) ){
                 	/* If we are dealing with a new content */
-                	numberOfExportableTranslations = 0;
                 	if( i != 1 ){
                 		/* If it's not the first content */
                 		if( numberOfExportableTranslations >= 2 ){
@@ -80,7 +78,11 @@ public class ContentsManagementDaoImpl implements ContentsManagementDao {
                 	/* We update the previous content's name */
                 	previousContentName = contentName;
                 	numberOfExportableTranslations = 0;
-                }
+                }                
+                if( exportableTranslation ){
+                	/* If we are dealing with an exportable translation */
+                	numberOfExportableTranslations++;
+                }                
                 /* We create a new translation */
                 Language tmpLanguage = new Language(languageId, languageName, exportableTranslation);
                 /* We add it to our current content */
