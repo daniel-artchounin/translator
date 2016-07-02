@@ -194,7 +194,7 @@ public class ImportContentDaoImpl implements ImportContentDao {
         return contentId;
     }
     
-	public int getContentId(Connection connexion, String contentName) throws DaoException {
+    protected int getContentId(Connection connexion, String contentName) throws DaoException {
     	int contentId = 0;
         PreparedStatement preparedStatement = null;
         String contentIdErrorMessage = "Contenu inexistant : veuillez contacter un administrateur.";
@@ -240,7 +240,7 @@ public class ImportContentDaoImpl implements ImportContentDao {
         return partId;
     }
 	
-	public int getPartId(Connection connexion, int contentId, Time partBeginning) throws DaoException {
+	protected int getPartId(Connection connexion, int contentId, Time partBeginning) throws DaoException {
     	int partId = 0;
         PreparedStatement preparedStatement = null;
         String partIdErrorMessage = "Partie inexistante : veuillez contacter un administrateur.";

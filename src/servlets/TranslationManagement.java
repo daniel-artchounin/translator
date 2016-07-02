@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import dao.DAOConfigurationException;
 import dao.DaoException;
 import dao.DaoFactory;
-import dao.ExportTranslationDao;
 import dao.TranslationManagementDao;
 
 
@@ -53,7 +52,13 @@ public class TranslationManagement extends HttpServlet {
 				}
 				break;
 			case "deactivate_translation":
-				System.out.println("deactivate_translation");
+				// System.out.println("deactivate_translation"); // Test
+				try {
+					this.translationManagementDao.deactivateTranslation(contentId, languageId);
+					session.setAttribute("successMessage", "Action effectuée avec succès");
+				} catch (DaoException e) {
+					session.setAttribute("errorMessage", e.getMessage());
+				}
 				break;
 			case "consult_modify_translation":
 				System.out.println("consult_modify_translation");
