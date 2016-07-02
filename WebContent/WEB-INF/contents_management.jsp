@@ -21,7 +21,29 @@
 		</jsp:include>
 		<div class="container-fluid">
 	        <section>
-	        	<h1>Contenus</h1>
+	        	<h1>Contenus</h1>	        	
+	        	<c:if test="${ !empty errorMessage || !empty successMessage }">	        	
+					<div class="row">
+					<div class="col-md-6 col-md-offset-3">				
+					<!-- Here, we display the error message -->
+					<c:if test="${ !empty errorMessage }">
+				  	    <div class="alert alert-danger" role="alert"> 
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							<span class="sr-only">Error: </span><c:out value="${ errorMessage }" />
+						</div>
+					</c:if>					
+					<!-- Here, we display the success message -->
+					<c:if test="${ !empty successMessage }">
+				  	    <div class="alert alert-success" role="alert"> 
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+							<span class="sr-only">Success: </span><c:out value="${ successMessage }" />
+						</div>
+					</c:if>				
+					</div>
+					</div>				
+				</c:if>				
 				<c:forEach var="content" items="${ contents }" varStatus="status">
 					<div class="row">
 					<div class="col-md-6 col-md-offset-3">

@@ -111,4 +111,35 @@ public class ContentsManagementDaoImpl implements ContentsManagementDao {
         return contents;
 	}
 	
+    @Override
+	public void deleteContent(int contentId) throws DaoException {
+    	Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        String query = "DELETE FROM Content "
+        		+ "WHERE id = ?;";
+        String contentErrorMessage = "Impossible de supprimer le contenu.";
+        String databaseErrorMessage = "Impossible de communiquer avec la base de données";
+        try{
+            connexion = daoFactory.getConnection();
+            preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
+            preparedStatement.setInt(1, contentId);
+            int result = preparedStatement.executeUpdate();
+            connexion.commit();
+            if(result == 0){
+            	throw new DaoException(contentErrorMessage);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(databaseErrorMessage);
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();  
+                }
+            } catch (SQLException e) {
+                throw new DaoException(databaseErrorMessage);
+            }
+        }
+	}	
+	
 }

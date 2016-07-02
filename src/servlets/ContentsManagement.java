@@ -32,6 +32,18 @@ public class ContentsManagement extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String action =  request.getParameter("action");
+		int contentId = 0;
+		if( (action != null) && (action.equals("delete_content")) ){
+			contentId = Integer.valueOf(request.getParameter("content_id"));
+			try {
+				this.contentsManagementDao.deleteContent(contentId);
+				request.setAttribute("successMessage", "Le contenu vient d'être supprimé avec succès");
+			} catch (DaoException e) {
+				request.setAttribute("errorMessage", e.getMessage());
+			}
+		}
 		try {
 			request.setAttribute("contents", this.contentsManagementDao.getContents());
 		} catch (DaoException e) {
