@@ -15,7 +15,6 @@ import dao.TranslationManagementDao;
 
 public class TranslationManagement extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String EXPORT_TRANSLATION_JSP = "/WEB-INF/export_translation.jsp";
 	private static final String CONTENTS_MANAGEMENT_PAGE = "/contents_management";
 
 	private TranslationManagementDao translationManagementDao;

@@ -13,7 +13,7 @@ import dao.DaoException;
 import dao.DaoFactory;
 import dao.ImportContentDao;
 import utilities.SRTHandler;
-import utilities.SRTHandlerException;
+import utilities.UtilitiesException;
 
 
 public class ImportContent extends HttpServlet {
@@ -55,7 +55,7 @@ public class ImportContent extends HttpServlet {
 			this.importContentDao.addContent(content, languageId);
 			request.setAttribute("successMessage", "Le traduction du contenu " + 
 			contentName + " vient d'être sauvegardée." );
-		} catch (SRTHandlerException | DaoException e) {
+		} catch (UtilitiesException | DaoException e) {
 			request.setAttribute("errorMessage", e.getMessage());
 		}
 		doGet(request, response);

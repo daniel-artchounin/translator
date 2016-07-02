@@ -17,7 +17,7 @@ import beans.Content;
 import beans.ContentPart;
 
 public class SRTHandler {
-	public static Content getContent(Part filePart, String contentName) throws SRTHandlerException{
+	public static Content getContent(Part filePart, String contentName) throws UtilitiesException{
 		Content content = new Content(contentName);
 		InputStream inputStream = null;
 		BufferedReader bufferedReader = null;
@@ -27,7 +27,7 @@ public class SRTHandler {
 		try {
 			inputStream = filePart.getInputStream();
 		} catch (IOException e) {
-			throw new SRTHandlerException("Fichier de sous-titres non valide");
+			throw new UtilitiesException("Fichier de sous-titres non valide");
 		}		
 		try (Reader inputStreamReader = new InputStreamReader(inputStream)) {
 			bufferedReader = new BufferedReader(inputStreamReader);
@@ -45,12 +45,12 @@ public class SRTHandler {
 		        	System.out.println(line); // Test
 		        } else {
 		        	/* The line doesn't contain the id of the part */
-		        	throw new SRTHandlerException("Fichier de sous-titres non valide");
+		        	throw new UtilitiesException("Fichier de sous-titres non valide");
 		        }
 		        line = bufferedReader.readLine();
         		if( line == null ){
         			/* The file doesn't contain any other line */
-        			throw new SRTHandlerException("Fichier de sous-titres non valide");
+        			throw new UtilitiesException("Fichier de sous-titres non valide");
         		} else {
         			/* The file contain another line */
         			Matcher m = beginningEndLineCPattern.matcher(line);
@@ -62,7 +62,7 @@ public class SRTHandler {
 						System.out.println("Found value: " + m.group(2) ); // Test
 					} else {
 						/* This line is not valid */
-						throw new SRTHandlerException("Fichier de sous-titres non valide");
+						throw new UtilitiesException("Fichier de sous-titres non valide");
 					}
 					partContent = null;
 					partFirstLine = true;
@@ -89,9 +89,9 @@ public class SRTHandler {
 			}
 			content = new Content(contentName, contentParts);
 	    }catch (UnsupportedEncodingException ex) {
-	    	throw new SRTHandlerException("Fichier de sous-titres non valide");
+	    	throw new UtilitiesException("Fichier de sous-titres non valide");
 	    }catch (IOException ex) {
-	    	throw new SRTHandlerException("Fichier de sous-titres non valide");
+	    	throw new UtilitiesException("Fichier de sous-titres non valide");
 	    }
 		return content;
 	}

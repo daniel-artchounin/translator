@@ -37,7 +37,7 @@ public class ContentPart implements Serializable {
 		this.beginning = beginning;
 		this.end = end;
 	}
-	
+		
 	public ContentPart(int content, Time beginning, Time end) {
 		this.content = content;
 		this.beginning = beginning;

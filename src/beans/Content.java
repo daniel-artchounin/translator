@@ -13,6 +13,7 @@ public class Content implements Serializable {
 	private ArrayList<Language> languages;
 
 	public Content() {
+		this.parts = new ArrayList<ContentPart>();
 	}
 	
 	public Content(int id, String name, ArrayList<ContentPart> parts, boolean hasAtLeastTwoExportableTranslations,
