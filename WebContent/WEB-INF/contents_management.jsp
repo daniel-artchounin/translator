@@ -21,7 +21,15 @@
 		</jsp:include>
 		<div class="container-fluid">
 	        <section>
-	        	<h1>Contenus</h1>	        	
+	        	<h1>Contenus</h1>
+	        	<c:if test="${! empty sessionScope.errorMessage}">		
+	        		<c:set var="errorMessage" value="${ sessionScope.errorMessage }" scope="request" />
+	        		<c:remove var="errorMessage" scope="session" />
+	        	</c:if>
+	        	<c:if test="${! empty sessionScope.successMessage}">
+	        		<c:set var="successMessage" value="${ sessionScope.successMessage }" scope="request" />
+	        		<c:remove var="successMessage" scope="session" />
+	        	</c:if>	        	
 	        	<c:if test="${ !empty errorMessage || !empty successMessage }">	        	
 					<div class="row">
 					<div class="col-md-6 col-md-offset-3">				

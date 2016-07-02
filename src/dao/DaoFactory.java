@@ -76,5 +76,9 @@ public class DaoFactory {
     public ExportTranslationDao getExportTranslationDao() {
         return new ExportTranslationDaoImpl(this);
     }
+    
+    public TranslationManagementDao getTranslationManagementDao() {
+        return new TranslationManagementDaoImpl(this);
+    }
 
 }
