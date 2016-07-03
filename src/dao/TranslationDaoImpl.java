@@ -42,6 +42,7 @@ public class TranslationDaoImpl extends DaoImpl implements TranslationDao {
                 String partContent = result.getString("partContent");
             	if(firstResult){
             		content.setName(contentName);
+            		firstResult = false;
             	}
             	content.getParts().add(new ContentPart(partId, contentId, partBeginning, partEnd, partContent));    
             }

@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.Content;
+import beans.Language;
 import dao.DAOConfigurationException;
 import dao.DaoException;
 import dao.DaoFactory;
@@ -41,7 +44,7 @@ public class TranslationManagement extends HttpServlet {
 		int languageId = 0;
 		HttpSession session = request.getSession();
 		boolean modifiableTranslation = false;
-		Content content = null;
+		ArrayList<Language> activatedLanguages = null;
 		if(action != null){
 			contentId = Integer.valueOf(request.getParameter("content_id"));
 			languageId = Integer.valueOf(request.getParameter("language_id"));
@@ -71,7 +74,12 @@ public class TranslationManagement extends HttpServlet {
 				try {
 					modifiableTranslation = this.translationManagementDao.isModifiableTranslation(contentId, languageId);
 					if( modifiableTranslation ){						
-						request.setAttribute("successMessage", "Action effectuée avec succès");
+						request.setAttribute("deactivatedTranslation", this.translationManagementDao.getContent(contentId, languageId));
+						activatedLanguages = this.translationManagementDao.getContentActivatedLanguages(contentId);
+						request.setAttribute("activatedLanguages", activatedLanguages);
+						request.setAttribute("chosenLanguage", activatedLanguages.get(0));
+						request.setAttribute("deactivatedLanguage", languageId);
+						request.setAttribute("activatedTranslation", this.translationManagementDao.getContent(contentId, activatedLanguages.get(0).getId()));
 						this.getServletContext().getRequestDispatcher( MODIFY_TRANSLATION_JSP ).forward(request, response);
 					} else {
 						request.setAttribute("content", this.translationManagementDao.getContent(contentId, languageId));

@@ -2,9 +2,15 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.util.ArrayList;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
+import beans.Content;
+import beans.ContentPart;
+import beans.Language;
 
 
 public class TranslationManagementDaoImpl extends TranslationDaoImpl implements TranslationManagementDao {
@@ -152,5 +158,42 @@ public class TranslationManagementDaoImpl extends TranslationDaoImpl implements 
         	return false;
         }
     }
+    
+	@Override
+	public ArrayList<Language> getContentActivatedLanguages(int contentId) throws DaoException {		
+		ArrayList<Language> languages = new ArrayList<Language>();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        /* Query to get the activated languages of a content in the database */
+        String query = "SELECT L.id AS languageId, L.language AS languageName "
+        		+ "FROM ContentLanguage CL, Language L "
+        		+ "WHERE CL.content = ? AND CL.language = L.id;";
+        String databaseErrorMessage = "Impossible de communiquer avec la base de données";
+        try{
+            connexion = daoFactory.getConnection();
+            preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
+            preparedStatement.setInt(1, contentId);
+            ResultSet result = preparedStatement.executeQuery();
+            while ( result.next() ) {
+            	/* Here, we get the content of each tuple */
+            	int languageId = result.getInt("languageId");
+                String languageName = result.getString("languageName");
+                /* Then, we add it to our content */
+                languages.add(new Language(languageId, languageName));    
+            }
+        } catch (SQLException e) {
+            throw new DaoException(databaseErrorMessage + ": " + e.getMessage());
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();  
+                }
+            } catch (SQLException e) {
+                throw new DaoException(databaseErrorMessage + ": " + e.getMessage());
+            }
+        }
+        return languages;
+	}
 	
 }

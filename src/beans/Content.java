@@ -14,6 +14,7 @@ public class Content implements Serializable {
 
 	public Content() {
 		this.parts = new ArrayList<ContentPart>();
+		this.languages = new ArrayList<Language>();
 	}
 	
 	public Content(int id, String name, ArrayList<ContentPart> parts, boolean hasAtLeastTwoExportableTranslations,
