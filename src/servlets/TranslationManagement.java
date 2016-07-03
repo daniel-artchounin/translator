@@ -70,18 +70,17 @@ public class TranslationManagement extends HttpServlet {
 				// System.out.println("consult_modify_translation"); // Test
 				try {
 					modifiableTranslation = this.translationManagementDao.isModifiableTranslation(contentId, languageId);
-					System.out.println(modifiableTranslation);
-					if( modifiableTranslation ){
+					if( modifiableTranslation ){						
+						request.setAttribute("successMessage", "Action effectuée avec succès");
 						this.getServletContext().getRequestDispatcher( MODIFY_TRANSLATION_JSP ).forward(request, response);
 					} else {
-						content = this.translationManagementDao.getContent(contentId, languageId);
+						request.setAttribute("content", this.translationManagementDao.getContent(contentId, languageId));
 						this.getServletContext().getRequestDispatcher( CONSULT_TRANSLATION_JSP ).forward(request, response);
-					}
-					session.setAttribute("successMessage", "Action effectuée avec succès");
+					}					
 				} catch (DaoException e) {					
 					session.setAttribute("errorMessage", e.getMessage());
-				}
-				
+					response.sendRedirect( request.getContextPath() + CONTENTS_MANAGEMENT_PAGE ); // Redirection
+				}				
 				break;	
 			default:
 				

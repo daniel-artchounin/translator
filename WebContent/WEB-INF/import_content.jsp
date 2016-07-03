@@ -17,7 +17,7 @@
 		<div class="container-fluid">
 			<form method="post" enctype="multipart/form-data" action="<c:url value="/import_content"/>">
 				<div class="row">
-					<div class="col-md-4 col-lg-offset-4 " >
+					<div class="col-md-6 col-md-offset-3" >
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								Import de contenu
@@ -30,7 +30,7 @@
 								</div>
 								<div class="form-group <c:if test="${ !empty errorMessage }"><c:out value="has-error" /></c:if>">
 									<label class="control-label" for="languageId">Langue :</label>
-									<select name="languageId" class="form-control" id ="languageId" autofocus required>
+									<select name="languageId" class="form-control" id ="languageId" required>
 										<c:if test="${ !empty languages }">
 											<c:forEach var="language" items="${ languages }" varStatus="status">
 												<option value="<c:out value="${ language.id }"/>"> ${ language.language } </option>
@@ -40,7 +40,7 @@
 								</div>
 								<div class="form-group <c:if test="${ !empty errorMessage }"><c:out value="has-error" /></c:if>">
 									<label class="control-label" for="file">Contenu à importer :</label>
-									<input type="file" id="file" class="form-control" placeholder="Contenu à importer" name="file" autofocus required/>
+									<input type="file" id="file" class="form-control" placeholder="Contenu à importer" name="file" required/>
 								</div>
 								
 								<!-- Here, we display the submit button -->

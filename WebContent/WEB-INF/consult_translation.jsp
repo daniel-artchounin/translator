@@ -15,7 +15,46 @@
 			<jsp:param name="contentsManagement" value="contentsManagement" />
 		</jsp:include>
 		<div class="container-fluid">
-			<p>Consult translation</p>
+			<c:if test="${ !empty content }">			
+			<form method="post" enctype="multipart/form-data" action="<c:url value="/import_content"/>">
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3" >
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								Traduction de ${ content.name }
+							</div>
+							<div class="panel-body">
+								<c:if test="${ !empty content.parts }">	
+								<c:forEach var="contentPart" items="${ content.parts }" varStatus="status">
+									<div class="form-group <c:if test="${ !empty errorMessage }"><c:out value="has-error" /></c:if>">
+										<label class="control-label" for="${ contentPart.id }" >${status.count}<br/> ${ contentPart.beginning },000 --> ${ contentPart.end },000 </label>
+										<textarea class="form-control" rows="5" id="${ contentPart.id }"  disabled >${ contentPart.partContent }</textarea>
+									</div>
+								</c:forEach>
+								</c:if>
+								<!-- Here, we display the error message -->
+								<c:if test="${ !empty errorMessage }">
+							  	    <div class="alert alert-danger" role="alert"> 
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+										<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+										<span class="sr-only">Error: </span><c:out value="${ errorMessage }" />
+									</div>
+								</c:if>
+								
+								<!-- Here, we display the success message -->
+								<c:if test="${ !empty successMessage }">
+							  	    <div class="alert alert-success" role="alert"> 
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+										<span class="sr-only">Success: </span><c:out value="${ successMessage }" />
+									</div>
+								</c:if>				
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			</c:if>
 	    </div>
 	    <!-- Here, we include the footer -->
 	    <%@ include file="/WEB-INF/footer.jsp" %>
