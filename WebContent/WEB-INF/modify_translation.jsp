@@ -55,7 +55,7 @@
 										</div>
 										<div class="row">
 										<div class="col-lg-6">
-											<textarea class="form-control" rows="5" id="${ activatedTranslation.parts[status.index].id }_${ chosenLanguage.id}" disabled>${ activatedTranslation.parts[status.index].partContent }</textarea>
+											<textarea class="form-control" rows="5" id="activatedlanguage_${ status.index }" disabled>${ activatedTranslation.parts[status.index].partContent }</textarea>
 										</div>
 										<div class="col-lg-6">
 											<textarea class="form-control" rows="5" id="${ deactivatedContentPart.id }_${ deactivatedLanguage }" >${ deactivatedContentPart.partContent }</textarea>
@@ -68,7 +68,8 @@
 								
 								<!-- Here, we display the update button -->
 								<input type="submit" class="btn btn-default" value="Update"/>
-								
+								<input type="hidden" id="contentId" value="${ contentId }" />
+							
 								<!-- Here, we display the error message -->
 								<c:if test="${ !empty errorMessage }">
 							  	    <div class="alert alert-danger" role="alert"> 
@@ -95,4 +96,5 @@
 	    </div>
 	    <!-- Here, we include the footer -->
 	    <%@ include file="/WEB-INF/footer.jsp" %>
+	    <script src="<c:url value="/js/script.js"/>"></script>
 	</body>

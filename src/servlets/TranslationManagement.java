@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import beans.Content;
 import beans.Language;
 import dao.DAOConfigurationException;
@@ -45,6 +47,8 @@ public class TranslationManagement extends HttpServlet {
 		HttpSession session = request.getSession();
 		boolean modifiableTranslation = false;
 		ArrayList<Language> activatedLanguages = null;
+		Content content = null;
+		String json = null;
 		if(action != null){
 			contentId = Integer.valueOf(request.getParameter("content_id"));
 			languageId = Integer.valueOf(request.getParameter("language_id"));
@@ -79,6 +83,7 @@ public class TranslationManagement extends HttpServlet {
 						request.setAttribute("activatedLanguages", activatedLanguages);
 						request.setAttribute("chosenLanguage", activatedLanguages.get(0));
 						request.setAttribute("deactivatedLanguage", languageId);
+						request.setAttribute("contentId", contentId);
 						request.setAttribute("activatedTranslation", this.translationManagementDao.getContent(contentId, activatedLanguages.get(0).getId()));
 						this.getServletContext().getRequestDispatcher( MODIFY_TRANSLATION_JSP ).forward(request, response);
 					} else {
@@ -90,6 +95,19 @@ public class TranslationManagement extends HttpServlet {
 					response.sendRedirect( request.getContextPath() + CONTENTS_MANAGEMENT_PAGE ); // Redirection
 				}				
 				break;	
+			case "change_translation":
+				try {
+					content = this.translationManagementDao.getContent(contentId, languageId);
+					Gson gson = new Gson();
+					json = gson.toJson(content);
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					response.getWriter().write(json);
+				} catch (DaoException e) {
+					session.setAttribute("errorMessage", e.getMessage());
+					response.sendRedirect( request.getContextPath() + CONTENTS_MANAGEMENT_PAGE ); // Redirection
+				}
+
 			default:
 				
 			}
