@@ -13,11 +13,10 @@ import beans.ContentPart;
 import beans.Language;
 
 
-public class ImportContentDaoImpl implements ImportContentDao {
-    private DaoFactory daoFactory;
+public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
 
-    ImportContentDaoImpl(DaoFactory daoFactory) {
-        this.daoFactory = daoFactory;
+	ImportContentDaoImpl(DaoFactory daoFactory) {
+        super(daoFactory);
     }
     
     @Override
@@ -31,7 +30,7 @@ public class ImportContentDaoImpl implements ImportContentDao {
 		ArrayList<Language> languages = null;
 		int contentId = 0;
 		try{			
-		    connexion = daoFactory.getConnection();
+		    connexion = this.daoFactory.getConnection();
 		    languages = this.getLanguages(); // Here, we get the existing languages in the database
 		    System.out.println("*** Gotten languages ***"); // Test
 		    preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
@@ -146,7 +145,7 @@ public class ImportContentDaoImpl implements ImportContentDao {
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         try{
-            connexion = daoFactory.getConnection();
+            connexion = this.daoFactory.getConnection();
             preparedStatement = (PreparedStatement) connexion.prepareStatement("SELECT id, language "
             		+ "FROM Language "
             		+ "ORDER BY id;");
@@ -177,7 +176,7 @@ public class ImportContentDaoImpl implements ImportContentDao {
 		Connection connexion = null;
 		int contentId = 0;
         try{
-            connexion = daoFactory.getConnection();
+            connexion = this.daoFactory.getConnection();
             contentId = this.getContentId(connexion, contentName);
         } catch (SQLException e) {
             throw new DaoException("Impossible de communiquer avec la base de données " + e.getMessage());
@@ -223,7 +222,7 @@ public class ImportContentDaoImpl implements ImportContentDao {
 		Connection connexion = null;
 		int partId = 0;
         try{
-            connexion = daoFactory.getConnection();
+            connexion = this.daoFactory.getConnection();
             partId = this.getPartId(connexion, contentId, partBeginning);
         } catch (SQLException e) {
             throw new DaoException("Impossible de communiquer avec la base de données " + e.getMessage());

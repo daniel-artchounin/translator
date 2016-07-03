@@ -11,11 +11,10 @@ import beans.Content;
 import beans.Language;
 
 
-public class ContentsManagementDaoImpl implements ContentsManagementDao {
-    private DaoFactory daoFactory;
+public class ContentsManagementDaoImpl extends DaoImpl implements ContentsManagementDao {
 
-    ContentsManagementDaoImpl(DaoFactory daoFactory) {
-        this.daoFactory = daoFactory;
+	ContentsManagementDaoImpl(DaoFactory daoFactory) {
+        super(daoFactory);
     }
 
 	@Override
@@ -50,7 +49,7 @@ public class ContentsManagementDaoImpl implements ContentsManagementDao {
         /* Contains the number of exportable translations of our current content */
         int numberOfExportableTranslations = 0; 
         try{
-            connexion = daoFactory.getConnection();
+            connexion = this.daoFactory.getConnection();
             preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
             ResultSet result = preparedStatement.executeQuery();
             while ( result.next() ) {
@@ -122,7 +121,7 @@ public class ContentsManagementDaoImpl implements ContentsManagementDao {
         String contentErrorMessage = "Impossible de supprimer le contenu.";
         String databaseErrorMessage = "Impossible de communiquer avec la base de données";
         try{
-            connexion = daoFactory.getConnection();
+            connexion = this.daoFactory.getConnection();
             preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
             preparedStatement.setInt(1, contentId);
             int result = preparedStatement.executeUpdate();

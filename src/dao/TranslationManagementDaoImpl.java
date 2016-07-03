@@ -7,11 +7,10 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 
-public class TranslationManagementDaoImpl implements TranslationManagementDao {
-    private DaoFactory daoFactory;
+public class TranslationManagementDaoImpl extends TranslationDaoImpl implements TranslationManagementDao {
 
     TranslationManagementDaoImpl(DaoFactory daoFactory) {
-        this.daoFactory = daoFactory;
+    	super(daoFactory);
     }
 	
     @Override
@@ -23,7 +22,7 @@ public class TranslationManagementDaoImpl implements TranslationManagementDao {
         String activateTranslationErrorMessage = "Impossible d'effectuer l'action demandée.";
         String databaseErrorMessage = "Impossible de communiquer avec la base de données";
         try{
-            connexion = daoFactory.getConnection();
+            connexion = this.daoFactory.getConnection();
             preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
             preparedStatement.setInt(1, contentId);
             preparedStatement.setInt(2, languageId);
@@ -114,6 +113,44 @@ public class TranslationManagementDaoImpl implements TranslationManagementDao {
             }
         }
         return numberOfTranslations;
+    }
+    
+    @Override
+    public boolean isModifiableTranslation(int contentId, int languageId) throws DaoException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        int numberFound = 0;
+        String query = "SELECT COUNT(*) AS numberFound "
+        		+ "FROM ContentLanguage "
+        		+ "WHERE content = ? AND language = ?;";
+        try{
+            connexion = daoFactory.getConnection();
+            preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
+            preparedStatement.setInt(1, contentId);
+            preparedStatement.setInt(2, languageId);
+            ResultSet result = preparedStatement.executeQuery();
+            boolean isNext = result.next();
+            if( !isNext ){
+            	throw new DaoException("Action momentanément impossible, veuillez contacter un administrateur");
+            } 
+            numberFound = result.getInt("numberFound");
+        } catch (SQLException e) {
+            throw new DaoException("Impossible de communiquer avec la base de données " + e.getMessage());
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();  
+                }
+            } catch (SQLException e) {
+                throw new DaoException("Impossible de communiquer avec la base de données");
+            }
+        }
+        if( numberFound == 0 ){
+        	return true;
+        } else {
+        	return false;
+        }
     }
 	
 }

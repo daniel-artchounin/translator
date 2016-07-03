@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import beans.Content;
 import beans.Language;
 
-public interface ImportContentDao {
+public interface ImportContentDao extends Dao {
 	public ArrayList<Language> getLanguages() throws DaoException;
 	public int getPartId(int contentId, Time partBeginning) throws DaoException;
 	public void addContent(Content content, int languageId) throws DaoException;
