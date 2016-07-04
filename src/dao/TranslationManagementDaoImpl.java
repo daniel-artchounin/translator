@@ -11,6 +11,7 @@ import com.mysql.jdbc.PreparedStatement;
 import beans.Content;
 import beans.ContentPart;
 import beans.Language;
+import beans.PartTranslation;
 
 
 public class TranslationManagementDaoImpl extends TranslationDaoImpl implements TranslationManagementDao {
@@ -195,5 +196,47 @@ public class TranslationManagementDaoImpl extends TranslationDaoImpl implements 
         }
         return languages;
 	}
+	
+	
+	@Override
+	public void updateTranslation(ArrayList<PartTranslation> partTranslations) throws DaoException {
+		Connection connexion = null;
+		String databaseErrorMessage = "Impossible de communiquer avec la base de données";
+		try{			
+		    connexion = this.daoFactory.getConnection();
+            for( PartTranslation partTranslation : partTranslations ){
+            	this.updatePart(connexion, partTranslation);
+            }
+            connexion.commit();
+		} catch (SQLException e) {
+		    throw new DaoException(databaseErrorMessage + ": " + e.getMessage());
+		}
+		finally {
+		    try {
+		        if (connexion != null) {
+		            connexion.close();  
+		        }
+		    } catch (SQLException e) {
+		        throw new DaoException(databaseErrorMessage + ": " + e.getMessage());
+		    }
+		}
+    }
+
+    protected void updatePart(Connection connexion, PartTranslation partTranslation) throws DaoException{
+		PreparedStatement preparedStatement = null;
+		String query = "UPDATE PartTranslation "
+				+ "SET content=? "
+				+ "WHERE part=? AND language=?;";
+		String updatePartErrorMessage = "Impossible de mettre à jour une partie";	
+		try{
+		    preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
+		    preparedStatement.setString(1, partTranslation.getContent());
+		    preparedStatement.setInt(2, partTranslation.getPart());
+		    preparedStatement.setInt(3, partTranslation.getLanguage());		    
+		    preparedStatement.executeUpdate();         
+		} catch (SQLException e) {		
+		    throw new DaoException(updatePartErrorMessage + ": " + e.getMessage());
+		}
+    }
 	
 }

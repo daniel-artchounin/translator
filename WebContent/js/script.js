@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$("#languageId").change(function(){
 		var $languageId = $(this).val();
-		var $contentId = $("#contentId").val();
+		var $contentId = $("#content_id").val();
 		// alert($languageId.toString() + "_" + $contentId.toString()); // Test
 		$.get('translation_management',{
 			action: 'change_translation',
@@ -14,7 +14,7 @@ $(document).ready(function(){
 				$.each(responseJson.parts, function(index, deactivatedContentPart){
 					// alert(deactivatedContentPart.partContent); // Test
 					// alert("#activatedlanguage_" + index.toString()); // Test
-					$("#activatedlanguage_" + index.toString()).val(deactivatedContentPart.partContent);
+					$("#activated_language_" + index.toString()).val(deactivatedContentPart.partContent);
 				});				
 				// alert(responseJson); // Test
             }

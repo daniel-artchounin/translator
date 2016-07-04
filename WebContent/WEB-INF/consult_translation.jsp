@@ -16,7 +16,7 @@
 		</jsp:include>
 		<div class="container-fluid">
 			<c:if test="${ !empty content }">			
-			<form method="post" enctype="multipart/form-data" >
+			<form method="post" >
 				<div class="row">
 					<div class="col-md-6 col-md-offset-3" >
 						<div class="panel panel-default">

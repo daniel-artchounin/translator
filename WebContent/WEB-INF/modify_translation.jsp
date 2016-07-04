@@ -16,7 +16,7 @@
 		</jsp:include>
 		<div class="container-fluid">
 			<c:if test="${ !empty deactivatedTranslation && !empty activatedTranslation }">			
-			<form method="post" enctype="multipart/form-data" >
+			<form method="post" action="<c:url value="/translation_management"/>">
 				<div class="row">
 					<div class="col-md-6 col-md-offset-3" >
 						<div class="panel panel-default">
@@ -45,31 +45,33 @@
 									</div>
 									<div class="col-lg-6">
 											<label class="control-label" for="toTranslateIn">A traduire en :</label>
-											<input type="text" id="toTranslateIn" class="form-control" placeholder="Nom de la langue" value ="${ deactivatedLanguage }" disabled />
+											<input type="text" id="toTranslateIn" name="toTranslateIn" class="form-control" placeholder="Nom de la langue" value ="${ deactivatedLanguage }" disabled />
 									</div>
 								</div>	
 								<c:forEach var="deactivatedContentPart" items="${ deactivatedTranslation.parts }" varStatus="status">
 									<div class="form-group <c:if test="${ !empty errorMessage }"><c:out value="has-error" /></c:if>">
 										<div class="row">
-										<label class="control-label" for="${ deactivatedContentPart.id }_${ deactivatedLanguage }" >${status.count}<br/> ${ deactivatedContentPart.beginning },000 --> ${ deactivatedContentPart.end },000 </label>
+										<label class="control-label" for="deactivated_language_part_content_${ status.count }" >${status.count}<br/> ${ deactivatedContentPart.beginning },000 --> ${ deactivatedContentPart.end },000 </label>
 										</div>
 										<div class="row">
 										<div class="col-lg-6">
-											<textarea class="form-control" rows="5" id="activatedlanguage_${ status.index }" disabled>${ activatedTranslation.parts[status.index].partContent }</textarea>
+											<textarea class="form-control" rows="5" id="activated_language_${ status.index }" disabled>${ activatedTranslation.parts[status.index].partContent }</textarea>
 										</div>
 										<div class="col-lg-6">
-											<textarea class="form-control" rows="5" id="${ deactivatedContentPart.id }_${ deactivatedLanguage }" >${ deactivatedContentPart.partContent }</textarea>
+											<textarea class="form-control" rows="5" id="deactivated_language_part_content_${ status.count }" name="deactivated_language_part_content_${ status.count }">${ deactivatedContentPart.partContent }</textarea>
+											<input type="hidden" name="deactivated_language_part_id_${ status.count }" value="${ deactivatedContentPart.id }" />
 										</div>	
 										</div>									
 									</div>
 								</c:forEach>
 								</div>
 								</c:if>
-								
+								<input type="hidden" name="number_of_deactivated_language_parts" value="${ fn:length(deactivatedTranslation.parts ) }" />
 								<!-- Here, we display the update button -->
-								<input type="submit" class="btn btn-default" value="Update"/>
-								<input type="hidden" id="contentId" value="${ contentId }" />
-							
+								<input type="submit" class="btn btn-default" value="Sauver"/>
+								<input type="hidden" id="content_id" name="content_id" value="${ contentId }" />
+								<input type="hidden" name="language_id" value ="${ deactivatedLanguage }" />
+								<input type="hidden" name="action" value="update_translation" />
 								<!-- Here, we display the error message -->
 								<c:if test="${ !empty errorMessage }">
 							  	    <div class="alert alert-danger" role="alert"> 
