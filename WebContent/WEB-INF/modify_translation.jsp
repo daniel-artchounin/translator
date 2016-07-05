@@ -44,14 +44,14 @@
 									</select>
 									</div>
 									<div class="col-lg-6">
-											<label class="control-label" for="toTranslateIn">A traduire en :</label>
-											<input type="text" id="toTranslateIn" name="toTranslateIn" class="form-control" placeholder="Nom de la langue" value ="${ deactivatedLanguage }" disabled />
+										<label class="control-label" for="toTranslateIn">A traduire en :</label>
+										<input type="text" id="toTranslateIn" name="toTranslateIn" class="form-control" placeholder="Nom de la langue" value ="${ languageName }" disabled />
 									</div>
 								</div>	
 								<c:forEach var="deactivatedContentPart" items="${ deactivatedTranslation.parts }" varStatus="status">
 									<div class="form-group <c:if test="${ !empty errorMessage }"><c:out value="has-error" /></c:if>">
 										<div class="row">
-										<label class="control-label" for="deactivated_language_part_content_${ status.count }" >${status.count}<br/> ${ deactivatedContentPart.beginning },000 --> ${ deactivatedContentPart.end },000 </label>
+										<label class="control-label" for="deactivated_language_part_content_${ status.count }" >${status.count}<br/> ${ deactivatedContentPart.beginning } --> ${ deactivatedContentPart.end } </label>
 										</div>
 										<div class="row">
 										<div class="col-lg-6">
@@ -69,8 +69,9 @@
 								<input type="hidden" name="number_of_deactivated_language_parts" value="${ fn:length(deactivatedTranslation.parts ) }" />
 								<!-- Here, we display the update button -->
 								<input type="submit" class="btn btn-default" value="Sauver"/>
-								<input type="hidden" id="content_id" name="content_id" value="${ contentId }" />
 								<input type="hidden" name="language_id" value ="${ deactivatedLanguage }" />
+								<input type="hidden" id="content_id" name="content_id" value="${ contentId }" />
+								<input type="hidden" name="language_name" value ="${ languageName }" />
 								<input type="hidden" name="action" value="update_translation" />
 								<!-- Here, we display the error message -->
 								<c:if test="${ !empty errorMessage }">

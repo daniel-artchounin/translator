@@ -86,6 +86,7 @@
 													<c:param name="action" value="consult_modify_translation" />
 													<c:param name="content_id" value="${ content.id }" />
 													<c:param name="language_id" value="${ language.id }" />
+													<c:param name="language_name" value="${ language.language }" />
 												</c:url>												
 												<a href="${ url2 }" 
 												<c:choose>

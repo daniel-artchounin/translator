@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,6 +15,9 @@ import javax.servlet.http.Part;
 import beans.Content;
 import beans.ContentPart;
 
+/*
+ * This class allows us to initialize a Content bean using a SRT file.
+ */
 public class SRTHandler {
 	public static Content getContent(Part filePart, String contentName) throws UtilitiesException{
 		Content content = new Content(contentName);
@@ -32,18 +34,14 @@ public class SRTHandler {
 		try (Reader inputStreamReader = new InputStreamReader(inputStream)) {
 			bufferedReader = new BufferedReader(inputStreamReader);
 			String line;
-			String beginningEndLinePattern = "^(\\d+:\\d\\d:\\d\\d),\\d+ --> ((\\d+:\\d\\d:\\d\\d)),\\d+";
+			String beginningEndLinePattern = "^(\\d+:\\d\\d:\\d\\d,\\d\\d\\d) --> (\\d+:\\d\\d:\\d\\d,\\d\\d\\d)";
 			Pattern beginningEndLineCPattern = Pattern.compile(beginningEndLinePattern);
 			while( ( line = bufferedReader.readLine() ) != null ){
 				if( line.length() == 0 ){
 					/* We have reached the end of the file */
-					System.out.println("We have reached the end of the file");
 					break;
 				}
-		        if( Pattern.matches("^\\d+$", line) ){
-		        	/* The line contains the id of the part */
-		        	System.out.println(line); // Test
-		        } else {
+		        if( !Pattern.matches("^\\d+$", line) ){
 		        	/* The line doesn't contain the id of the part */
 		        	throw new UtilitiesException("Fichier de sous-titres non valide");
 		        }
@@ -54,13 +52,7 @@ public class SRTHandler {
         		} else {
         			/* The file contain another line */
         			Matcher m = beginningEndLineCPattern.matcher(line);
-					if (m.find( )) {
-						/* This line is valid: it contains the beginning 
-						and the end of the current part */
-						System.out.println("Found value: " + m.group(0) ); // Test
-						System.out.println("Found value: " + m.group(1) ); // Test
-						System.out.println("Found value: " + m.group(2) ); // Test
-					} else {
+					if (!m.find( )) {
 						/* This line is not valid */
 						throw new UtilitiesException("Fichier de sous-titres non valide");
 					}
@@ -79,11 +71,9 @@ public class SRTHandler {
 								partContent += "\n";
 								partContent += line;
 							}							
-							// System.out.println(line); // Test
 						}						
 					}	
-					System.out.println(partContent); // Test
-					ContentPart contentPart = new ContentPart(Time.valueOf(m.group(1)), Time.valueOf(m.group(2)), partContent);
+					ContentPart contentPart = new ContentPart(m.group(1), m.group(2), partContent);
 					contentParts.add( contentPart );
         		}        		
 			}

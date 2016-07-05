@@ -12,6 +12,7 @@ import dao.DaoFactory;
 import dao.ContentsManagementDao;
 
 
+/* The servlet used to manage the contents. */
 public class ContentsManagement extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENTS_MANAGEMENT_JSP = "/WEB-INF/contents_management.jsp";
@@ -25,7 +26,7 @@ public class ContentsManagement extends HttpServlet {
         DaoFactory daoFactory;
 		try {
 			daoFactory = DaoFactory.getInstance();
-			this.contentsManagementDao = daoFactory.getUpdateTranslationDao();
+			this.contentsManagementDao = daoFactory.getContentsManagementDao();
 		} catch (DAOConfigurationException e) {
 			e.printStackTrace();
 		}        

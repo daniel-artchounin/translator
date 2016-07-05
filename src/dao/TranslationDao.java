@@ -2,6 +2,8 @@ package dao;
 
 import beans.Content;
 
-public interface TranslationDao {
+
+/* The base interface to deal with the translations. */
+public interface TranslationDao extends Dao {
 	public Content getContent(int contentId, int languageId) throws DaoException;
 }

@@ -1,6 +1,6 @@
 package dao;
 
-/* This class allow us to throw some exception linked to the configuration of the dao model */
+/* This class allows us to throw some exceptions linked to the configuration of the DAO model */
 public class DAOConfigurationException extends Exception {
 	private static final long serialVersionUID = 1L;
 

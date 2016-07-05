@@ -27,7 +27,7 @@
 								<c:if test="${ !empty content.parts }">	
 								<c:forEach var="contentPart" items="${ content.parts }" varStatus="status">
 									<div class="form-group <c:if test="${ !empty errorMessage }"><c:out value="has-error" /></c:if>">
-										<label class="control-label" for="${ contentPart.id }" >${status.count}<br/> ${ contentPart.beginning },000 --> ${ contentPart.end },000 </label>
+										<label class="control-label" for="${ contentPart.id }" >${status.count}<br/> ${ contentPart.beginning } --> ${ contentPart.end } </label>
 										<textarea class="form-control" rows="5" id="${ contentPart.id }"  disabled >${ contentPart.partContent }</textarea>
 									</div>
 								</c:forEach>

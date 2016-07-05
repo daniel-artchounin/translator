@@ -18,6 +18,7 @@ import utilities.SRTWriter;
 import utilities.UtilitiesException;
 
 
+/* The servlet to export some translations. */
 public class ExportTranslation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENTS_MANAGEMENT_PAGE = "/contents_management";

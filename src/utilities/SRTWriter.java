@@ -10,6 +10,9 @@ import beans.Content;
 import beans.ContentPart;
 
 
+/*
+ * This class allows us to write a SRT file using a Content bean.
+ */
 public class SRTWriter {
 	public static void writeContent(OutputStream outputStream, Content content) throws UtilitiesException, IOException{
 		int i = 0;
@@ -21,7 +24,7 @@ public class SRTWriter {
             	beginningString = contentPart.getBeginning().toString();
             	endString = contentPart.getEnd().toString();
             	outputStreamWriter.write(i + "\n");
-            	outputStreamWriter.write( beginningString + ",000 --> " + endString + ",000\n");
+            	outputStreamWriter.write( beginningString + " --> " + endString + "\n");
             	outputStreamWriter.write(contentPart.getPartContent() + "\n\n");
             }
 	    }catch (UnsupportedEncodingException ex) {

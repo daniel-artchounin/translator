@@ -1,4 +1,4 @@
--- ======================================== Modèle Physique de Données ========================================
+-- ======================================== Create tables in the database ========================================
 
 CREATE TABLE Content(
 	id INT AUTO_INCREMENT,
@@ -12,11 +12,12 @@ CREATE TABLE Content(
 CREATE TABLE Part(
 	id INT AUTO_INCREMENT,
 	content INT NOT NULL,
-	beginning TIME NOT NULL,
-	end TIME NOT NULL,
+	beginning CHAR(12) NOT NULL,
+	end CHAR(12) NOT NULL,
 	PRIMARY KEY(id),
 	UNIQUE(content, beginning),
 	UNIQUE(content, end),
+	CHECK (beginning LIKE '[0123456789][0123456789]:[0123456789][0123456789]:[0123456789][0123456789],[0123456789][0123456789][0123456789]'),
 	FOREIGN KEY(content) REFERENCES Content(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

@@ -16,6 +16,7 @@ import utilities.SRTHandler;
 import utilities.UtilitiesException;
 
 
+/* The servlet to import some contents. */
 public class ImportContent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String IMPORT_CONTENT_JSP = "/WEB-INF/import_content.jsp";

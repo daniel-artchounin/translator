@@ -11,6 +11,9 @@ import beans.Content;
 import beans.Language;
 
 
+/* The implementation of the class which interacts with the database 
+ * to get or delete some contents.
+ * */
 public class ContentsManagementDaoImpl extends DaoImpl implements ContentsManagementDao {
 
 	ContentsManagementDaoImpl(DaoFactory daoFactory) {

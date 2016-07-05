@@ -2,18 +2,19 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-import beans.Content;
-import beans.ContentPart;
+
 import beans.Language;
 import beans.PartTranslation;
 
 
+/* The implementation of the class which interacts with the database 
+ * to manage some translations.
+ * */
 public class TranslationManagementDaoImpl extends TranslationDaoImpl implements TranslationManagementDao {
 
     TranslationManagementDaoImpl(DaoFactory daoFactory) {

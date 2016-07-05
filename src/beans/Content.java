@@ -3,6 +3,8 @@ package beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
+/* This bean represents a content */
 public class Content implements Serializable {
 
 	private static final long serialVersionUID = 4266935197208508665L;

@@ -1,3 +1,5 @@
+-- ======================================== Drop tables in the database ========================================
+
 DROP TABLE PartTranslation;
 DROP TABLE ContentLanguage;
 DROP TABLE Language;

@@ -2,6 +2,8 @@ package beans;
 
 import java.io.Serializable;
 
+
+/* This bean represents a translation of a content's part */
 public class PartTranslation implements Serializable {
 
 	private static final long serialVersionUID = 8390740883634542524L;

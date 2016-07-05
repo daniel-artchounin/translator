@@ -8,6 +8,8 @@ import java.util.Properties;
 
 import com.mysql.jdbc.Connection;
 
+
+/* This class is the factory of our DAO model. */
 public class DaoFactory {
     private static final String FILE_PROPERTIES = "/dao/dao.properties";
     private static final String PROPERTY_URL = "url";
@@ -69,7 +71,7 @@ public class DaoFactory {
         return new ImportContentDaoImpl(this);
     }
     
-    public ContentsManagementDao getUpdateTranslationDao() {
+    public ContentsManagementDao getContentsManagementDao() {
         return new ContentsManagementDaoImpl(this);
     }
     

@@ -20,6 +20,7 @@ import dao.DaoFactory;
 import dao.TranslationManagementDao;
 
 
+/* The servlet to manage the translations. */
 public class TranslationManagement extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENTS_MANAGEMENT_PAGE = "/contents_management";
@@ -45,14 +46,13 @@ public class TranslationManagement extends HttpServlet {
 		String action =  request.getParameter("action");
 		int contentId = 0;
 		int languageId = 0;
+		String languageName = null;
 		HttpSession session = request.getSession();
 		boolean modifiableTranslation = false;
 		ArrayList<Language> activatedLanguages = null;
 		Content content = null;
 		String json = null;
-		System.out.println("***********");
 		if(action != null){
-			System.out.println(request.getParameter("language_id"));
 			contentId = Integer.valueOf(request.getParameter("content_id"));
 			languageId = Integer.valueOf(request.getParameter("language_id"));
 			switch (action) {
@@ -88,6 +88,7 @@ public class TranslationManagement extends HttpServlet {
 				}
 				break;
 			case "update_translation":
+				languageName = request.getParameter("language_name");
 				int numberOfDeactivatedLanguageParts = Integer.valueOf(request.getParameter("number_of_deactivated_language_parts"));
 				String deactivatedLanguagePartContent = null;
 				int deactivatedLanguagePartId = 0;
@@ -110,6 +111,7 @@ public class TranslationManagement extends HttpServlet {
 		            		request.setAttribute("chosenLanguage", activatedLanguage);
 		            		break;
 		            }					
+		            request.setAttribute("languageName", languageName);
 					request.setAttribute("deactivatedLanguage", languageId);
 					request.setAttribute("contentId", contentId);
 					request.setAttribute("activatedTranslation", this.translationManagementDao.getContent(contentId, chosenLanguageId));
@@ -119,12 +121,14 @@ public class TranslationManagement extends HttpServlet {
 				}
 				this.getServletContext().getRequestDispatcher( MODIFY_TRANSLATION_JSP ).forward(request, response);
 				break;
-			case "consult_modify_translation":
+			case "consult_modify_translation":				
 				try {
 					modifiableTranslation = this.translationManagementDao.isModifiableTranslation(contentId, languageId);
-					if( modifiableTranslation ){						
+					if( modifiableTranslation ){				
+						languageName = request.getParameter("language_name");
 						request.setAttribute("deactivatedTranslation", this.translationManagementDao.getContent(contentId, languageId));
 						activatedLanguages = this.translationManagementDao.getContentActivatedLanguages(contentId);
+						request.setAttribute("languageName", languageName);
 						request.setAttribute("activatedLanguages", activatedLanguages);
 						request.setAttribute("chosenLanguage", activatedLanguages.get(0));
 						request.setAttribute("deactivatedLanguage", languageId);

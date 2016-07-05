@@ -2,6 +2,8 @@ package beans;
 
 import java.io.Serializable;
 
+
+/* This bean represents a language */
 public class Language implements Serializable {
 	
 	private static final long serialVersionUID = 2358908821469816808L;

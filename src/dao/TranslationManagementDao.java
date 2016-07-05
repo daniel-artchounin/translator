@@ -6,6 +6,9 @@ import beans.Language;
 import beans.PartTranslation;
 
 
+/* The interface of the class which interacts with the database 
+ * to manage some translations.
+ * */
 public interface TranslationManagementDao extends TranslationDao {
 	public void activateTranslation (int contentId, int languageId) throws DaoException;
 	public void deactivateTranslation (int contentId, int languageId) throws DaoException;

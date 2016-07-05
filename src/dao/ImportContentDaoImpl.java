@@ -2,7 +2,6 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 
 import com.mysql.jdbc.Connection;
@@ -13,6 +12,9 @@ import beans.ContentPart;
 import beans.Language;
 
 
+/* The implementation of the class which interacts with the database 
+ * to import some translations.
+ * */
 public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
 
 	ImportContentDaoImpl(DaoFactory daoFactory) {
@@ -32,22 +34,17 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
 		try{			
 		    connexion = this.daoFactory.getConnection();
 		    languages = this.getLanguages(); // Here, we get the existing languages in the database
-		    System.out.println("*** Gotten languages ***"); // Test
 		    preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
 		    preparedStatement.setString(1, content.getName());
-		    System.out.println("*** Added content ***"); // Test
 		    int result = preparedStatement.executeUpdate();		    
             if(result == 0){
             	throw new DaoException(contentErrorMessage);
             }
             contentId = this.getContentId(connexion, content.getName());
-            System.out.println("*** Gotten content ***"); // Test
             for( ContentPart contentPart : content.getParts() ){
             	this.addPart(connexion, contentId, contentPart, languageId, languages);
-            	System.out.println("*** Added part ***"); // Test
             }
             this.addContentLanguage(connexion, contentId, languageId);
-            System.out.println("*** Added content language ***"); // Test
             connexion.commit();
 		} catch (SQLException e) {
 		    throw new DaoException(databaseErrorMessage + ": " + e.getMessage());
@@ -73,18 +70,15 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
 		try{
 		    preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
 		    preparedStatement.setInt(1, contentId);
-		    preparedStatement.setTime(2, contentPart.getBeginning());
-		    preparedStatement.setTime(3, contentPart.getEnd());		    
+		    preparedStatement.setString(2, contentPart.getBeginning());
+		    preparedStatement.setString(3, contentPart.getEnd());		    
 		    int result = preparedStatement.executeUpdate();		   
-		    System.out.println("*** Added ContentPart ***"); // Test
             if(result == 0){
             	throw new DaoException(contentErrorMessage);
             }            
             partId = this.getPartId(connexion, contentId, contentPart.getBeginning());
-            System.out.println("*** Gottent ContentPart id ***"); // Test
             for( Language language : languages ){
             	this.addPartTranslation(connexion, partId, language, contentPart.getPartContent(), languageId);
-            	System.out.println("*** Added Content Translated Part ***"); // Test
             }            
 		} catch (SQLException e) {		
 		    throw new DaoException(databaseErrorMessage + ": " + e.getMessage());
@@ -98,9 +92,6 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
 		String databaseErrorMessage = "Impossible de communiquer avec la base de données";
 		String partTranslationErrorMessage = "Impossible d'ajouter une traduction";
 		int currentLanguageId = currentLanguage.getId();
-		// System.out.println(part); // Test
-		// System.out.println(currentLanguageId); // Test
-		// System.out.println(content); // Test
 		try{
 		    preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
 		    preparedStatement.setInt(1, part);
@@ -218,7 +209,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
     }
     
     @Override
-	public int getPartId(int contentId, Time partBeginning) throws DaoException {
+	public int getPartId(int contentId, String partBeginning) throws DaoException {
 		Connection connexion = null;
 		int partId = 0;
         try{
@@ -239,7 +230,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
         return partId;
     }
 	
-	protected int getPartId(Connection connexion, int contentId, Time partBeginning) throws DaoException {
+	protected int getPartId(Connection connexion, int contentId, String partBeginning) throws DaoException {
     	int partId = 0;
         PreparedStatement preparedStatement = null;
         String partIdErrorMessage = "Partie inexistante : veuillez contacter un administrateur.";
@@ -250,7 +241,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
         try{
             preparedStatement = (PreparedStatement) connexion.prepareStatement(query);
             preparedStatement.setInt(1, contentId);
-            preparedStatement.setTime(2, partBeginning);
+            preparedStatement.setString(2, partBeginning);
             ResultSet result = preparedStatement.executeQuery();
             atLeastOneResult = result.next();
             if( atLeastOneResult ){

@@ -2,7 +2,6 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -10,6 +9,8 @@ import com.mysql.jdbc.PreparedStatement;
 import beans.Content;
 import beans.ContentPart;
 
+
+/* The base implementation to deal with the translations. */
 public class TranslationDaoImpl extends DaoImpl implements TranslationDao {
 	
     TranslationDaoImpl(DaoFactory daoFactory) {
@@ -37,8 +38,8 @@ public class TranslationDaoImpl extends DaoImpl implements TranslationDao {
             	/* Here we get the content of each tuple */
             	String contentName = result.getString("contentName");
             	int partId = result.getInt("partId");
-                Time partBeginning = result.getTime("partBeginning");
-                Time partEnd = result.getTime("partEnd");
+                String partBeginning = result.getString("partBeginning");
+                String partEnd = result.getString("partEnd");
                 String partContent = result.getString("partContent");
             	if(firstResult){
             		content.setName(contentName);

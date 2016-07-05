@@ -1,3 +1,5 @@
+-- ======================================== Insert content in the database ========================================
+
 INSERT INTO Language(language) 
 VALUES 
 ('chinois mandarin'),
