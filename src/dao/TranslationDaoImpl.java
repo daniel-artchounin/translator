@@ -17,6 +17,7 @@ public class TranslationDaoImpl extends DaoImpl implements TranslationDao {
         super(daoFactory);
     }
     
+    /* To get a content in the database. */
 	@Override
 	public Content getContent(int contentId, int languageId) throws DaoException {		
 		Content content = new Content();

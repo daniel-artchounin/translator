@@ -1,4 +1,4 @@
--- ======================================== Insert content in the database ========================================
+-- ======================================== Insert some data in the database ========================================
 
 INSERT INTO Language(language) 
 VALUES 

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import beans.Content;
 import beans.Language;
 
-/* The interface of the class which interacts with the database 
- * to import some translations.
- * */
+/* The interface of the class which interacts with 
+ * the database to import some translations.
+ */
 public interface ImportContentDao extends Dao {
 	public ArrayList<Language> getLanguages() throws DaoException;
 	public int getPartId(int contentId, String partBeginning) throws DaoException;

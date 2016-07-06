@@ -11,15 +11,16 @@ import beans.Content;
 import beans.Language;
 
 
-/* The implementation of the class which interacts with the database 
- * to get or delete some contents.
- * */
+/* The implementation of the class which interacts 
+ * with the database to get or delete some contents.
+ */
 public class ContentsManagementDaoImpl extends DaoImpl implements ContentsManagementDao {
 
 	ContentsManagementDaoImpl(DaoFactory daoFactory) {
         super(daoFactory);
     }
 
+	/* To get the contents in the database. */
 	@Override
 	public ArrayList<Content> getContents() throws DaoException {
 		ArrayList<Content> contents = new ArrayList<Content>();
@@ -47,9 +48,9 @@ public class ContentsManagementDaoImpl extends DaoImpl implements ContentsManage
         		+ "ORDER BY R3.contentName, R3.languageName;";
         String previousContentName = ""; // To memorize the previous content's name in each iteration
         Content tmpContent = null; // The current content
-        String databaseErrorMessage = "Impossible de communiquer avec la base de données";
+        String databaseErrorMessage = "Impossible de communiquer avec la base de données.";
         int i = 0; // Iterator
-        /* Contains the number of exportable translations of our current content */
+        /* Contains the number of deactivated translations of our current content */
         int numberOfExportableTranslations = 0; 
         try{
             connexion = this.daoFactory.getConnection();
@@ -115,6 +116,7 @@ public class ContentsManagementDaoImpl extends DaoImpl implements ContentsManage
         return contents;
 	}
 	
+	/* To delete a specific content in the database. */
     @Override
 	public void deleteContent(int contentId) throws DaoException {
     	Connection connexion = null;
@@ -122,7 +124,7 @@ public class ContentsManagementDaoImpl extends DaoImpl implements ContentsManage
         String query = "DELETE FROM Content "
         		+ "WHERE id = ?;";
         String contentErrorMessage = "Impossible de supprimer le contenu.";
-        String databaseErrorMessage = "Impossible de communiquer avec la base de données";
+        String databaseErrorMessage = "Impossible de communiquer avec la base de données.";
         try{
             connexion = this.daoFactory.getConnection();
             preparedStatement = (PreparedStatement) connexion.prepareStatement(query);

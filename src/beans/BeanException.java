@@ -1,5 +1,6 @@
 package beans;
 
+
 /* This class allows us to throw some exceptions linked to the beans */
 public class BeanException extends Exception {
 

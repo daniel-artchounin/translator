@@ -22,6 +22,7 @@ public class ContentsManagement extends HttpServlet {
     public ContentsManagement() {
     }
     
+    /* We instantiate an implementation to interact with our data structure. */
     public void init() throws ServletException {
         DaoFactory daoFactory;
 		try {
@@ -36,11 +37,14 @@ public class ContentsManagement extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String action =  request.getParameter("action");
 		int contentId = 0;
+		String contentName = null;
 		if( (action != null) && (action.equals("delete_content")) ){
+			/* Here, we should delete a content */
+			contentName = request.getParameter("content_name");
 			contentId = Integer.valueOf(request.getParameter("content_id"));
 			try {
 				this.contentsManagementDao.deleteContent(contentId);
-				request.setAttribute("successMessage", "Le contenu vient d'être supprimé avec succès");
+				request.setAttribute("successMessage", "Le contenu " + contentName + " vient d'être supprimé avec succès.");
 			} catch (DaoException e) {
 				request.setAttribute("errorMessage", e.getMessage());
 			}

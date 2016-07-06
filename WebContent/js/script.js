@@ -1,8 +1,12 @@
 $(document).ready(function(){
+	/* Here, we will make an AJAX GET request to get
+	 * some JSON content representing a translation.
+	 * Then, we will use it to update our form used
+	 * to update a translation.
+	 */ 
 	$("#languageId").change(function(){
 		var $languageId = $(this).val();
 		var $contentId = $("#content_id").val();
-		// alert($languageId.toString() + "_" + $contentId.toString()); // Test
 		$.get('translation_management',{
 			action: 'change_translation',
 			language_id: $languageId, 
@@ -10,13 +14,9 @@ $(document).ready(function(){
 			},
 			function(responseJson) { 
 				var $i = 0;
-				// alert($languageId.toString() + "_" + $contentId.toString()); // Test
 				$.each(responseJson.parts, function(index, deactivatedContentPart){
-					// alert(deactivatedContentPart.partContent); // Test
-					// alert("#activatedlanguage_" + index.toString()); // Test
 					$("#activated_language_" + index.toString()).val(deactivatedContentPart.partContent);
 				});				
-				// alert(responseJson); // Test
             }
 		);
 	});

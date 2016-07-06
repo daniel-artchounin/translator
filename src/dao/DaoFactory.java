@@ -27,6 +27,7 @@ public class DaoFactory {
         this.password = password;
     }
 
+	/* To get an instance of the factory. */
     public static DaoFactory getInstance() throws DAOConfigurationException {
     	Properties properties = new Properties();
         String url;
@@ -61,6 +62,7 @@ public class DaoFactory {
         return instance;
     }
 
+    /* To get a connection to the database. */
     public Connection getConnection() throws SQLException {
         Connection connexion =  (Connection) DriverManager.getConnection(url, username, password);
         connexion.setAutoCommit(false);

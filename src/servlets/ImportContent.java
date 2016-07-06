@@ -26,6 +26,7 @@ public class ImportContent extends HttpServlet {
     public ImportContent() {
     }
 
+    /* We instantiate an implementation to interact with our data structure. */
     public void init() throws ServletException {
         DaoFactory daoFactory;
 		try {
@@ -37,6 +38,7 @@ public class ImportContent extends HttpServlet {
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/* Here, we should just display a form so that a user could import a content */
 		try {
 			request.setAttribute("languages", this.importContentDao.getLanguages());
 		} catch (DaoException e) {
@@ -46,6 +48,7 @@ public class ImportContent extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/* Here, we should import a content */
 		request.setCharacterEncoding("UTF-8");
 		Part filePart = request.getPart("file");
 		int languageId = Integer.valueOf(request.getParameter("languageId"));

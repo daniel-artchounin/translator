@@ -12,15 +12,16 @@ import beans.Language;
 import beans.PartTranslation;
 
 
-/* The implementation of the class which interacts with the database 
- * to manage some translations.
- * */
+/* The implementation of the class which interacts with 
+ * the database to manage some translations.
+ */
 public class TranslationManagementDaoImpl extends TranslationDaoImpl implements TranslationManagementDao {
 
     TranslationManagementDaoImpl(DaoFactory daoFactory) {
     	super(daoFactory);
     }
 	
+    /* To activate a translation in the database. */
     @Override
 	public void activateTranslation (int contentId, int languageId) throws DaoException {
     	Connection connexion = null;
@@ -53,6 +54,7 @@ public class TranslationManagementDaoImpl extends TranslationDaoImpl implements 
         }
 	}	
     
+    /* To deactivate a translation in the database. */
     @Override
 	public void deactivateTranslation (int contentId, int languageId) throws DaoException {
     	Connection connexion = null;
@@ -90,6 +92,7 @@ public class TranslationManagementDaoImpl extends TranslationDaoImpl implements 
         }
 	}	
     
+    /* To get the number of activated translation(s) of a specific content. */
     @Override
 	public int getNumberOfTranslations(int contentId) throws DaoException {
         Connection connexion = null;
@@ -123,6 +126,7 @@ public class TranslationManagementDaoImpl extends TranslationDaoImpl implements 
         return numberOfTranslations;
     }
     
+    /* To know if a translation of a content is modifiable (not activated). */
     @Override
     public boolean isModifiableTranslation(int contentId, int languageId) throws DaoException {
         Connection connexion = null;
@@ -161,6 +165,7 @@ public class TranslationManagementDaoImpl extends TranslationDaoImpl implements 
         }
     }
     
+    /* To get the activated languages of a content in the database. */
 	@Override
 	public ArrayList<Language> getContentActivatedLanguages(int contentId) throws DaoException {		
 		ArrayList<Language> languages = new ArrayList<Language>();
@@ -198,7 +203,7 @@ public class TranslationManagementDaoImpl extends TranslationDaoImpl implements 
         return languages;
 	}
 	
-	
+	/* To update the parts of a translation. */
 	@Override
 	public void updateTranslation(ArrayList<PartTranslation> partTranslations) throws DaoException {
 		Connection connexion = null;
@@ -223,6 +228,7 @@ public class TranslationManagementDaoImpl extends TranslationDaoImpl implements 
 		}
     }
 
+	/* To update a specific part of a translation. */
     protected void updatePart(Connection connexion, PartTranslation partTranslation) throws DaoException{
 		PreparedStatement preparedStatement = null;
 		String query = "UPDATE PartTranslation "

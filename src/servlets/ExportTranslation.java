@@ -28,6 +28,7 @@ public class ExportTranslation extends HttpServlet {
     public ExportTranslation() {
     }
 
+    /* We instantiate an implementation to interact with our data structure. */
     public void init() throws ServletException {
         DaoFactory daoFactory;
 		try {
@@ -42,11 +43,16 @@ public class ExportTranslation extends HttpServlet {
 		String action =  request.getParameter("action");
 		int contentId = 0;
 		int languageId = 0;
+		String contentName = null;
+		String languageName = null;
 		HttpSession session = request.getSession();
 		Content content = null;
 		if( (action != null) && (action.equals("export_translation") )){
+			/* Here, we should export a translation */
 			contentId = Integer.valueOf(request.getParameter("content_id"));
 			languageId = Integer.valueOf(request.getParameter("language_id"));
+			contentName = request.getParameter("content_name");
+			languageName = request.getParameter("language_name");
 			try {
 				content = this.exportTranslationDao.getContent(contentId, languageId);
 			} catch (DaoException e) {
@@ -54,7 +60,7 @@ public class ExportTranslation extends HttpServlet {
 				response.sendRedirect( request.getContextPath() + CONTENTS_MANAGEMENT_PAGE ); // Redirection
 			}
 			response.setContentType("text/plain");
-			response.setHeader("Content-Disposition", "attachment;filename=" + contentId + ".srt");
+			response.setHeader("Content-Disposition", "attachment;filename=" + contentName.replace(' ', '_') + '_' + languageName.replace(' ', '_') + ".srt");
 			
 			OutputStream outputStream = response.getOutputStream();
 			try {

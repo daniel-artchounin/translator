@@ -22,10 +22,12 @@
 		<div class="container-fluid">
 	        <section>
 	        	<h1>Contenus</h1>
+	        	<!-- Here, we manage the error message in a session variable -->
 	        	<c:if test="${! empty sessionScope.errorMessage}">		
 	        		<c:set var="errorMessage" value="${ sessionScope.errorMessage }" scope="request" />
 	        		<c:remove var="errorMessage" scope="session" />
 	        	</c:if>
+	        	<!-- Here, we manage the success message in a session variable -->
 	        	<c:if test="${! empty sessionScope.successMessage}">
 	        		<c:set var="successMessage" value="${ sessionScope.successMessage }" scope="request" />
 	        		<c:remove var="successMessage" scope="session" />
@@ -66,6 +68,7 @@
 									<c:url value="${ contentsManagementUrl }" var="url1">
 										<c:param name="action" value="delete_content" />
 										<c:param name="content_id" value="${ content.id }" />
+										<c:param name="content_name" value="${ content.name }" />
 									</c:url>
 									<a href="${ url1 }" class="btn btn-danger" role="button">Supprimer</a>
 									
@@ -99,7 +102,9 @@
 													<c:url value="${ exportTranslationUrl }" var="url3">
 														<c:param name="action" value="export_translation" />
 														<c:param name="content_id" value="${ content.id }" />
+														<c:param name="content_name" value="${ content.name }" />
 														<c:param name="language_id" value="${ language.id }" />
+														<c:param name="language_name" value="${ language.language }" />
 													</c:url>
 													<a href="${ url3 }" class="btn btn-info" role="button">Exporter</a>
 													<!-- Possibility to desactivate (disable export) a translation -->
@@ -110,10 +115,9 @@
 															<c:param name="language_id" value="${ language.id }" />
 														</c:url>
 														<a href="${ url4 }" class="btn btn-danger" role="button">Désactiver</a>
-													</c:if>
-													
+													</c:if>													
 												</c:if>
-												
+												<!-- Possibility to activate a translation -->
 												<c:if test="${ language.exportable == false }">
 													<c:url value="${ translationManagementUrl }" var="url5">
 														<c:param name="action" value="activate_translation" />
@@ -131,6 +135,7 @@
 					</div>
 					</div>
 				</c:forEach>
+				<!-- Possibility to add a content -->
 				<c:url value="${ importContentUrl }" var="url6" />
 				<h4>
 					<a href="${ url6 }" title="Cliquez si vous souhaitez en ajouter un">

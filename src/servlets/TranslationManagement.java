@@ -32,6 +32,7 @@ public class TranslationManagement extends HttpServlet {
     public TranslationManagement() {
     }
 
+    /* We instantiate an implementation to interact with our data structure. */
     public void init() throws ServletException {
         DaoFactory daoFactory;
 		try {
@@ -44,10 +45,11 @@ public class TranslationManagement extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action =  request.getParameter("action");
+		
+		HttpSession session = request.getSession(); // To be able to deal with some errors
 		int contentId = 0;
 		int languageId = 0;
-		String languageName = null;
-		HttpSession session = request.getSession();
+		String languageName = null;		
 		boolean modifiableTranslation = false;
 		ArrayList<Language> activatedLanguages = null;
 		Content content = null;
@@ -56,7 +58,8 @@ public class TranslationManagement extends HttpServlet {
 			contentId = Integer.valueOf(request.getParameter("content_id"));
 			languageId = Integer.valueOf(request.getParameter("language_id"));
 			switch (action) {
-			case "activate_translation":		
+			case "activate_translation":
+				/* Here, we should activate a translation */
 				try {
 					this.translationManagementDao.activateTranslation(contentId, languageId);
 					session.setAttribute("successMessage", "Action effectuée avec succès");
@@ -66,6 +69,7 @@ public class TranslationManagement extends HttpServlet {
 				response.sendRedirect( request.getContextPath() + CONTENTS_MANAGEMENT_PAGE ); // Redirection
 				break;
 			case "deactivate_translation":
+				/* Here, we should deactivate a translation */
 				try {
 					this.translationManagementDao.deactivateTranslation(contentId, languageId);
 					session.setAttribute("successMessage", "Action effectuée avec succès");
@@ -75,6 +79,10 @@ public class TranslationManagement extends HttpServlet {
 				response.sendRedirect( request.getContextPath() + CONTENTS_MANAGEMENT_PAGE ); // Redirection
 				break;
 			case "change_translation":
+				/* Here, we should manage an AJAX GET request: 
+				 * we should generate some JSON content 
+				 * representing a translation  
+				 */
 				try {
 					content = this.translationManagementDao.getContent(contentId, languageId);
 					Gson gson = new Gson();
@@ -88,12 +96,13 @@ public class TranslationManagement extends HttpServlet {
 				}
 				break;
 			case "update_translation":
+				/* Here, we should update a translation */
 				languageName = request.getParameter("language_name");
 				int numberOfDeactivatedLanguageParts = Integer.valueOf(request.getParameter("number_of_deactivated_language_parts"));
 				String deactivatedLanguagePartContent = null;
 				int deactivatedLanguagePartId = 0;
 				ArrayList<PartTranslation> partTranslations = new ArrayList<PartTranslation>();
-				int chosenLanguageId = Integer.valueOf(request.getParameter("languageId"));
+				int chosenLanguageId = Integer.valueOf(request.getParameter("languageId"));				
 				for(int i=1; i<=numberOfDeactivatedLanguageParts; i++){
 					String parameter1 = "deactivated_language_part_content_" + i;
 					String parameter2 = "deactivated_language_part_id_" + i;
@@ -107,21 +116,23 @@ public class TranslationManagement extends HttpServlet {
 					activatedLanguages = this.translationManagementDao.getContentActivatedLanguages(contentId);
 					request.setAttribute("activatedLanguages", activatedLanguages);		
 		            for( Language activatedLanguage : activatedLanguages ){
-		            	if(activatedLanguage.getId() == chosenLanguageId )
+		            	if(activatedLanguage.getId() == chosenLanguageId ){		            		
 		            		request.setAttribute("chosenLanguage", activatedLanguage);
 		            		break;
+		            	}
 		            }					
 		            request.setAttribute("languageName", languageName);
 					request.setAttribute("deactivatedLanguage", languageId);
 					request.setAttribute("contentId", contentId);
 					request.setAttribute("activatedTranslation", this.translationManagementDao.getContent(contentId, chosenLanguageId));
-					this.getServletContext().getRequestDispatcher( MODIFY_TRANSLATION_JSP ).forward(request, response);
+					request.setAttribute("successMessage", "Mise à jour effectuée avec succès.");
 				} catch (DaoException e) {
 					request.setAttribute("errorMessage", e.getMessage());
 				}
 				this.getServletContext().getRequestDispatcher( MODIFY_TRANSLATION_JSP ).forward(request, response);
 				break;
-			case "consult_modify_translation":				
+			case "consult_modify_translation":
+				/* Here, we should display an activated or not activated translation */
 				try {
 					modifiableTranslation = this.translationManagementDao.isModifiableTranslation(contentId, languageId);
 					if( modifiableTranslation ){				

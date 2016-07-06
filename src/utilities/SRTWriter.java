@@ -18,6 +18,7 @@ public class SRTWriter {
 		int i = 0;
 		String beginningString = null;
 		String endString = null;
+		String partContent = null;
 		try (Writer outputStreamWriter = new OutputStreamWriter(outputStream)) {
             for( ContentPart contentPart: content.getParts() ){
             	i++;
@@ -25,7 +26,12 @@ public class SRTWriter {
             	endString = contentPart.getEnd().toString();
             	outputStreamWriter.write(i + "\n");
             	outputStreamWriter.write( beginningString + " --> " + endString + "\n");
-            	outputStreamWriter.write(contentPart.getPartContent() + "\n\n");
+            	partContent = contentPart.getPartContent();
+            	if(partContent.length() == 0){
+            		outputStreamWriter.write("\n");
+            	}else{
+            		outputStreamWriter.write(partContent + "\n\n");
+            	}            	
             }
 	    }catch (UnsupportedEncodingException ex) {
 	    	throw new UtilitiesException("Action impossible à réaliser, veuillez contacter un administrateur.");

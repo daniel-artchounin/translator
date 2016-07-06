@@ -12,15 +12,16 @@ import beans.ContentPart;
 import beans.Language;
 
 
-/* The implementation of the class which interacts with the database 
- * to import some translations.
- * */
+/* The implementation of the class which interacts with 
+ * the database to import some translations.
+ */
 public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
 
 	ImportContentDaoImpl(DaoFactory daoFactory) {
         super(daoFactory);
     }
     
+	/* To add a content in the database. */
     @Override
     public void addContent(Content content, int languageId) throws DaoException {
 		Connection connexion = null;
@@ -60,6 +61,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
 		}
     }
 
+    /* To add a content's part in the database. */
     protected void addPart(Connection connexion, int contentId, ContentPart contentPart, int languageId, ArrayList<Language> languages) throws DaoException{
 		PreparedStatement preparedStatement = null;
 		String query = "INSERT INTO Part(content, beginning, end) "
@@ -85,6 +87,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
 		}
     }
 
+    /* To add a part's translation in the database. */
     protected void addPartTranslation(Connection connexion, int part, Language currentLanguage, String content, int translatedLanguageId) throws DaoException{
     	PreparedStatement preparedStatement = null;
 		String query = "INSERT INTO PartTranslation(part, language, content) "
@@ -99,7 +102,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
 		    if( currentLanguageId == translatedLanguageId ){
 		    	preparedStatement.setString(3, content);
 		    } else {
-		    	preparedStatement.setString(3, null);
+		    	preparedStatement.setString(3, "");
 		    }
 		    int result = preparedStatement.executeUpdate();		    
             if(result == 0){
@@ -110,6 +113,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
 		}
     }
     
+    /* To save in the database that a translation is active. */
     protected void addContentLanguage(Connection connexion, int content, int language) throws DaoException{
 		PreparedStatement preparedStatement = null;
 		String query = "INSERT INTO ContentLanguage(content, language) "
@@ -130,6 +134,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
 		}
     }
     
+    /* To get the languages in the database. */
     @Override
 	public ArrayList<Language> getLanguages() throws DaoException {
     	ArrayList<Language> languages = new ArrayList<Language>();
@@ -162,6 +167,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
         return languages;
     }
     
+    /* To get a content's id using its name. */
     @Override
 	public int getContentId(String contentName) throws DaoException {
 		Connection connexion = null;
@@ -184,6 +190,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
         return contentId;
     }
     
+    /* To get a content's id using its name. */
     protected int getContentId(Connection connexion, String contentName) throws DaoException {
     	int contentId = 0;
         PreparedStatement preparedStatement = null;
@@ -208,6 +215,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
         return contentId;
     }
     
+    /* To get a part's id. */
     @Override
 	public int getPartId(int contentId, String partBeginning) throws DaoException {
 		Connection connexion = null;
@@ -230,6 +238,7 @@ public class ImportContentDaoImpl extends DaoImpl implements ImportContentDao {
         return partId;
     }
 	
+    /* To get a part's id. */
 	protected int getPartId(Connection connexion, int contentId, String partBeginning) throws DaoException {
     	int partId = 0;
         PreparedStatement preparedStatement = null;
